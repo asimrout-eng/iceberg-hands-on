@@ -105,13 +105,6 @@ docker-compose logs -f
 
 ## How Docker Installation Works
 
-**New to Docker?** Read [DOCKER_INSTALLATION_EXPLAINED.md](DOCKER_INSTALLATION_EXPLAINED.md) for a detailed explanation of:
-- How MinIO gets installed and runs
-- How JupyterLab gets installed inside the Spark container
-- Step-by-step what happens when you run `docker-compose up`
-- How containers communicate with each other
-- Visual diagrams of the architecture
-
 ### Quick Overview
 
 When you run `docker-compose up -d`:
@@ -297,7 +290,6 @@ curl http://localhost:9000/minio/health/live
 
 ## Resources
 
-- [Docker Installation Explained](DOCKER_INSTALLATION_EXPLAINED.md) - Detailed guide on how MinIO and JupyterLab installation works
 - [Git Workflow Guide](GIT_WORKFLOW.md) - How to push files to GitHub
 - [Apache Iceberg Documentation](https://iceberg.apache.org/)
 - [Firebolt Documentation](https://docs.firebolt.io/)
