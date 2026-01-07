@@ -103,6 +103,39 @@ docker-compose logs -f
 - **MinIO Console**: http://localhost:9001 (login: minioadmin/minioadmin)
 - **Spark UI**: http://localhost:4040 (when Spark job is running)
 
+## How Docker Installation Works
+
+**New to Docker?** Read [DOCKER_INSTALLATION_EXPLAINED.md](DOCKER_INSTALLATION_EXPLAINED.md) for a detailed explanation of:
+- How MinIO gets installed and runs
+- How JupyterLab gets installed inside the Spark container
+- Step-by-step what happens when you run `docker-compose up`
+- How containers communicate with each other
+- Visual diagrams of the architecture
+
+### Quick Overview
+
+When you run `docker-compose up -d`:
+
+1. **MinIO Container**:
+   - Docker downloads the `minio/minio:latest` image (if not already present)
+   - Creates a container and starts MinIO server
+   - MinIO is ready in ~30 seconds
+   - **No installation needed** - it's pre-built in the image
+
+2. **Spark Container** (includes JupyterLab):
+   - Docker downloads the `apache/spark-py:latest` image (if not already present) - **~1.5GB, takes 5-10 minutes first time**
+   - Waits for MinIO to be healthy
+   - Runs setup command that:
+     - Installs JupyterLab and Python packages via `pip` (2-5 minutes first time)
+     - Downloads Iceberg JAR files (1-2 minutes)
+     - Starts JupyterLab server
+   - JupyterLab is ready when you see it running on port 8888
+
+**Key Point**: Nothing is installed on your Mac! Everything runs in isolated Docker containers.
+
+**First run time**: 8-17 minutes (downloads and installations)  
+**Subsequent runs**: ~40 seconds (everything is cached)
+
 ### 4. Run Tutorial Notebooks
 
 Open JupyterLab and navigate through the notebooks in order:
@@ -264,6 +297,8 @@ curl http://localhost:9000/minio/health/live
 
 ## Resources
 
+- [Docker Installation Explained](DOCKER_INSTALLATION_EXPLAINED.md) - Detailed guide on how MinIO and JupyterLab installation works
+- [Git Workflow Guide](GIT_WORKFLOW.md) - How to push files to GitHub
 - [Apache Iceberg Documentation](https://iceberg.apache.org/)
 - [Firebolt Documentation](https://docs.firebolt.io/)
 - [NYC Taxi Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
