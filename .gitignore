@@ -1,0 +1,48 @@
+# Data files
+data/
+*.parquet
+*.csv
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# MinIO data (if running locally)
+minio_data/
+
+# JAR files (downloaded automatically)
+jars/
+*.jar
+
