@@ -110,7 +110,7 @@ SELECT
     totalAmount as total_amount,
     congestionSurcharge as congestion_surcharge,
     airportFee as airport_fee
-FROM parquet.`/home/spark/data/yellow_tripdata_2023-01.parquet`
+FROM parquet.`/home/spark/data/yellow_tripdata_2025-10.parquet`
 LIMIT 10000
 """)
 
