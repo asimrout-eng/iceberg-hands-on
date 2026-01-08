@@ -50,7 +50,7 @@ except Exception as e:
         print(f"Error creating bucket: {e}")
 
 # Cell 4: Read NYC Taxi data
-df = spark.read.parquet("/home/spark/data/yellow_tripdata_2023-01.parquet")
+df = spark.read.parquet("/home/spark/data/yellow_tripdata_2025-10.parquet")
 print(f"Total records: {df.count()}")
 print(f"Schema:")
 df.printSchema()
