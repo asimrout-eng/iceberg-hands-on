@@ -84,8 +84,11 @@ cd iceberg-hands-on
 # Create necessary directories
 mkdir -p data notebooks scripts jars
 
-# Download sample data
-python scripts/download_nyc_taxi_data.py
+# Download sample data (default: October & November 2025)
+python3 scripts/download_nyc_taxi_data.py
+
+# Or download specific months
+python3 scripts/download_nyc_taxi_data.py 2025 10 11
 
 # Start all services (MinIO and Spark with JupyterLab)
 docker-compose up -d
@@ -141,10 +144,15 @@ Open JupyterLab and navigate through the notebooks in order:
 
 ### Step 1: Download NYC Yellow Taxi Data
 
-The data download script is included. Run it from your host machine:
+The enhanced data download script supports downloading any year/month combination. The script is flexible and can download multiple months at once.
+
+#### Default Download (October & November 2025)
+
+By default, the script downloads October and November 2025 data:
 
 ```bash
-python scripts/download_nyc_taxi_data.py
+# From your host machine
+python3 scripts/download_nyc_taxi_data.py
 ```
 
 Or from inside the Spark container:
@@ -152,6 +160,40 @@ Or from inside the Spark container:
 ```bash
 docker exec -it spark python /home/spark/scripts/download_nyc_taxi_data.py
 ```
+
+#### Download Specific Months
+
+You can specify custom year and months:
+
+```bash
+# Download specific months (year month1 month2 ...)
+python3 scripts/download_nyc_taxi_data.py 2025 10 11
+
+# Download different year
+python3 scripts/download_nyc_taxi_data.py 2023 1 2 3
+
+# Download single month
+python3 scripts/download_nyc_taxi_data.py 2024 6
+```
+
+#### Data Source
+
+The data is downloaded from the official [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) page. The script downloads Parquet format files which are optimized for analytics.
+
+**Available Data Types:**
+- `yellow` - Yellow Taxi trips (default)
+- `green` - Green Taxi trips
+- `fhv` - For-Hire Vehicle trips
+- `fhvhv` - High Volume For-Hire Vehicle trips
+
+**Note:** The script currently downloads Yellow Taxi data by default. To download other types, modify the `data_type` parameter in the script.
+
+#### Download Location
+
+Files are saved to the `data/` directory:
+- `data/yellow_tripdata_YYYY-MM.parquet`
+
+**File Sizes:** Each monthly file is typically 60-80 MB, so ensure you have sufficient disk space.
 
 ### Step 2: Create Your First Iceberg Table
 
