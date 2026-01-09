@@ -155,6 +155,10 @@ docker-compose logs -f
 ### Step 5: Access Services
 
 - **JupyterLab**: http://localhost:8888
+  - ⚠️ **IMPORTANT**: Always use JupyterLab from Docker (http://localhost:8888)
+  - All packages (pyspark, pyiceberg, etc.) are pre-installed in the container
+  - Do NOT run notebooks from a local Jupyter installation on your Mac
+  - If you get "ModuleNotFoundError: No module named 'pyspark'", you're running locally instead of in Docker
 - **MinIO Console**: http://localhost:9001 (login: minioadmin/minioadmin)
 - **Spark UI**: http://localhost:4040 (when Spark job is running)
 
@@ -886,6 +890,23 @@ spark.sql("""
 ```
 
 ## Troubleshooting
+
+### Issue: "ModuleNotFoundError: No module named 'pyspark'"
+
+**Problem**: You're running the notebook from a local Jupyter installation instead of from the Docker container.
+
+**Solution**: 
+1. Make sure Docker containers are running:
+   
+   docker-compose ps
+   2. Access JupyterLab from Docker at: **http://localhost:8888**
+3. All packages (pyspark, pyiceberg, etc.) are pre-installed in the container
+4. No local installation needed
+
+**Why this happens**: The Docker container has all packages installed, but your local Mac doesn't. Always use JupyterLab from Docker (port 8888).
+
+**Alternative** (if you must run locally): Install packages on your Mac:h
+pip3 install pyspark pyiceberg minio boto3 pandas pyarrow --break-system-packages --user⚠️ Not recommended - use Docker instead.
 
 ### Issue: MinIO connection errors
 
